@@ -2,7 +2,9 @@
 
 Apache Maven is a popular tool for build automation, primarily Java projects,
 which is a software project management and comprehension tool. Based on the concept of a project object model (POM), Maven can manage a project's build, reporting and documentation from a central piece of information.
+
 ---
+
 ## Downloading & Installing
 1. we can download maven from this [link](https://maven.apache.org/download.cgi).
 2. we need to set the JAVA_HOME path to the environment variables.
@@ -72,6 +74,7 @@ mvn archetype:generate
 pom.xml is the project object modes, central piece of information.
 
 ---
+
 ## Maven repositories
 
 ##### There are three types of Maven repositories
@@ -105,6 +108,7 @@ Here the plugins, dependencies will be stored in the C:/software/maven path inst
 **Note** these settings could be in **.m2** directory in **settings.xml** file or in **maven/conf/settings.xml** as public settings.
 
 ---
+
 ## Understanding the standard directory layout
 
 - **Project Root**
