@@ -1,0 +1,85 @@
+- Apache Maven is a popular tool for build automation, primarily Java projects.
+- Maven Directories
+    - The bin folder contains the batch files and shell scripts to run Maven on various platforms.
+    - The boot folder contains the jars required for Maven to start(plexus-classworlds-2.7.0.jar).
+    - The conf folder contains the default settings.xml file used by Maven.
+    - The lib folder contains the libraries used by Maven. It also contains an ext folder
+      in which third-party extensions, which can extend or override the default Maven
+      implementation, can be placed.
+
+- When we type mvn command the patch file in the bin directory will be run
+- The batch file search about JAVA_HOME and runs its main class {{org.codehaus.plexus.classworlds.launcher.Launcher}}.
+- mvn -version to check the version of maven
+- Apple provided Java for Mac, but stopped doing so from Java 7 onwards.
+- Brew is a popular application on Mac OS X to install open source software.
+
+*************************************
+- Changing the JDK of Maven
+- set JAVA_HOME=C:\Program Files\devtools\java\Eclipse Adoptium\jdk-17.0.10.7-hotspot
+- mvn -version
+
+- Hence, it is important to ensure JAVA_HOME is defined. In the absence of this variable, Maven
+  attempts to detect the presence of Java from PATH. This is typically JRE and not JDK.
+
+- creating our first Maven Project
+-- mvn archetype:generate -DgroupId=com.packt.cookbook -DartifactId=simple-project -DarchetypeArtifactId=mavenarchetype-quickstart -DinteractiveMode=false
+- You can change the groupId and artifactId values in the preceding command as per your requirement.
+
+
+** Note
+- all dependencies and plugins are downloaded and stored into the .m2 folder inside the user
+- for example the plugins stored in ~/.m2/repository/org/apache/maven/plugins
+- plugins is artifact the same as dependency, its jar file\
+
+There are three types of Maven repositories :
+&& Local: This is the repository in your computer filesystem.
+&& Remote: This is the repository from where the required Maven files get downloaded.
+&& Mirrors: These are repository managers, such as Nexus and Artifactory, that mirror various repositories.
+
+
+- we can change the location of repository in .m2 folder
+    - Set the local repository to your own path in the settings.xml in maven/conf
+    - Or create new settings.xml in the .m2 folder and add the following elements
+    <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <localRepository>C:/software/maven</localRepository>
+    </settings>
+    Here the plugins, dependencies will be stored in the C:/software/maven path instead of m2
+- Maven will use settings.xml in the user's .m2 folder, if not found will get the info from the default
+  settings.xml, present in the conf folder of the Maven installation.
+
+- Running Maven behind an HTTP proxy server
+  - Most organizations do not allow devices in their network to access the Internet directly for
+    security and other reasons. In such cases, typically, a proxy server comes into picture. The
+    proxy server details are specified in the browser or any other location where access to the
+    Internet is required.
+  - Create a settings.xml file in the .m2 folder in your HOME directory, if it does not exist already.
+  - Add the following code within the settings tag:
+    <proxies>
+        <proxy>
+            <id>myproxy</id>
+            <active>true</active>
+            <protocol>http</protocol>
+            <host>proxy.myorg.com</host>
+            <port>8080</port>
+            <username>proxyuser</username>
+            <password>somepassword</password>
+            <nonProxyHosts>*.myorg.com </nonProxyHosts>
+        </proxy>
+    </proxies>
+  - If the proxy server does not need authentication, the username and password tags can be omitted.
+  - The nonProxyHosts tag allows you to specify locations that can be accessed directly (for instance, your intranet). This can be skipped if not relevant.
+  - Maven needs Internet access to download plugins and dependencies. When Maven runs, it
+    reads the user's settings.xml file, if it exists. It checks for any active proxy settings and applies the same.
+  - Maven uses the values in the proxy settings to download any artifacts from the repository.
+  - The HTTP proxy server may work only in your organization's network, so we can set the <active> tag to false
+
+*******************************************************************
+- Understanding the standard directory layout
+        - target
+            - classes           -> contains the src/main/java compiled classes, src/main/resources files.
+            - test-classes      -> contains the src/test/java compiled classes, src/test/resources files.
+            - surefire-reports  -> Test reports are separately placed in this folder.
+                                   Typically, both XML and HTML report formats are available.
+            - The output .jar file: The generated project artifact is also present in this folder.
+            - Two other folders—maven-archiver and maven-status—hold information used by Maven during the build.
+
