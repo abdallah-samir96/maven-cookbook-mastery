@@ -1,0 +1,130 @@
+Maven Lifecycle
+- What makes up a lifecycle? The stages of a lifecycle are called phases. In each phase, one or
+  more goals can be executed.
+
+- Maven has three built-in build lifecycles:
+  1 default: The default lifecycle handles project build and deployment
+  2 clean: The clean lifecycle cleans up the files and folders produced by Maven
+  3 site: The site lifecycle handles the creation of project documentation
+
+- A plugin goal is a specific task that builds the project.
+- <modelVersion>4.0.0</modelVersion> -> defines the version of this schema.
+- The groupId element is a unique identifier of the organization to which the project belongs,
+  It is a good practice to follow the reverse domain name notation
+- Maven properties are placeholders. Their values are accessible anywhere in the pom file by using ${key}, where key is the property name.
+
+- Maven has a global settings file called settings.xml in the conf folder of the Maven
+  installation. The values in this file can be overridden in the user settings file— the settings.
+  xml file—that is present in the .m2 subfolder of your HOME folder.
+
+- we can define mirror element in settings.xml Instead of downloading dependencies from Maven Central, you can configure Maven
+  to download them from a mirror of the central repository.
+  <mirror>
+      <id>nexus</id>
+      <name>My Company Mirror</name>
+      <url>http://nexus.mycompany.com/pub/maven2</url>
+      <mirrorOf>central</mirrorOf>
+  </mirror>
+
+-   Maven provides three type of profiles
+    1- Per Project profile as defined in the pom file of the project pom.xml.
+    2- Per User profile as defined in the user settings file (in the .m2 sub-folder of the user's HOME folder)
+    3- A Global profile as defined in the global settings file (in the conf folder of M2_HOME)
+
+- we can set it now in pom.xml
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+            <activeByDefault>false</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+    - mvn help:active-profiles to check the active profile
+    - to activate the profile set <activeByDefault>true</activeByDefault>
+    - mvn –P dev package to invoke the dev profile.
+    - mvn  -P dev clean compile exec:java to run using specific profile
+    - we can active profile by OS or missing files or active by default, environment variables so on.
+
+- Using properties in Maven
+
+- There are different types of properties.
+    They are as follows:
+        1-  Environment variables: Prefixing a variable with env. will return the value of the shell's environment variable.
+            For example, ${env.PATH} will return the value of the PATH variable.
+        2-  pom variables: Prefixing a variable with project. will return the value of that element in the pom file.
+            For example, ${project.version} will return the value in the <version> tag of the pom file.
+        3-  The settings variable: Prefixing a variable with settings. will return the value of that element in the settings file.
+            For example, ${settings.offline} will return the value <offline> in the settings file.
+        4-  Java properties: Any property available through the System.getProperties() method in Java is available.
+            For example, ${java.home}.
+        5-  Normal properties: Values that are specified in the <properties> tag, which is shown in the following example:
+            <properties>
+                <java.version>1.7</java.version>
+            </properties>
+            Here, the ${java.version} command will return 1.7
+
+
+
+- practices for looking up in problem areas are as follows:
+   1-  External properties: These are properties defined outside the pom file (in a settings file)
+       but used as part of a plugin configuration. The absence of this property definition will break the build.
+   2-  Incomplete specification: This is where properties are defined for different build
+       environments. A missing definition for one will break the build.
+
+
+
+- To set the platform-independent builds in our Maven project
+- <properties>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+************************************************************************************************************************
+
+- Essential Maven Plugins
+- Using the Maven Surefire plugin to run unit tests
+- every task in Maven is done using plugins.
+
+- As clean is a separate lifecycle from the default (build) lifecycle, clean needs to be
+  explicitly called before the default lifecycle if you need to ensure that the working directory
+  is removed.
+
+-  mvn help:describe -Dcmd=package used to know the lifecycle of the phase.
+
+
+- if you need to skip the deletion of working directory you can determine the skip element to true.
+- <plugin>
+      <artifactId>maven-clean-plugin</artifactId>
+      <version>2.6</version>
+      <configuration>
+          <skip>true</skip>
+      </configuration>
+  </plugin>
+- here if you types mvn clean will skip execution the task of deleting the working directory.
+
+
+** Using the Maven Surefire plugin to run unit tests
+
+- A best practice of software development is writing automated unit tests for the code that you develop.
+- The plugin that does this job is the Maven Surefire plugin.
+- mvn test
+- The test phase itself essentially runs the test goal of the Maven Surefire plugin.
+- This runs the test classes that are present in the target/test-classes folder.
+- Here we can use Junit, TestNG, so on, so if we want to skip the test cases we can make it through the surefire plugin
+<plugins>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.17</version>
+        <configuration>
+            <skipTests>true</skipTests>
+        </configuration>
+    </plugin>
+</plugins>
+
+
+** Using the Maven Failsafe plugin to run integration tests
+- While unit tests are run during the test phase of the build lifecycle, integration tests
+  are run during the verify phase.
+- The Maven Failsafe plugin is used to run integration tests.
+-

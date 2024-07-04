@@ -4,9 +4,21 @@
   <groupId>org.example</groupId>
   <artifactId>maven-cookbook-mastery</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.0</version>
+  <version>1.0.0-SNAPSHOT</version>
   <name>maven-cookbook-mastery</name>
   <url>http://maven.apache.org</url>
+  <description>This description is written by abdallah samir ${developer.email}</description>
+  <organization>
+    <name>Special Organization</name>
+    <url>http://www.anything.com</url>
+  </organization>
+
+
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <developer.email>abdallahsameer22@gmail.com</developer.email>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -15,4 +27,78 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <mainClass>org.example.App</mainClass>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+            <release>17</release>
+        </configuration>
+      </plugin>
+     <plugin>
+       <artifactId>maven-clean-plugin</artifactId>
+       <version>3.2.0</version>
+       <executions>
+         <execution>
+           <id>auto-clean</id>
+           <phase>initialize</phase>
+           <goals>
+             <goal>clean</goal>
+           </goals>
+         </execution>
+       </executions>
+<!--        here it will delete the directory abdallah under the basedir-->
+       <configuration>
+         <filesets>
+           <fileset>
+             <directory>${basedir}/abdallah</directory>
+           </fileset>
+         </filesets>
+       </configuration>
+     </plugin>
+
+
+    </plugins>
+  </build>
+
+
+
+  <profiles>
+    <profile>
+      <id>dev</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-text -->
+<!--        <dependency>-->
+<!--          <groupId>org.apache.commons</groupId>-->
+<!--          <artifactId>commons-text</artifactId>-->
+<!--          <version>1.11.0</version>-->
+<!--        </dependency>-->
+      </dependencies>
+     <build>
+       <plugins>
+         <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
+         <plugin>
+           <groupId>org.codehaus.mojo</groupId>
+           <artifactId>exec-maven-plugin</artifactId>
+           <version>3.0.0</version>
+           <configuration>
+             <mainClass>org.example.App</mainClass>
+           </configuration>
+         </plugin>
+       </plugins>
+     </build>
+    </profile>
+  </profiles>
 </project>
