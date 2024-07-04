@@ -85,7 +85,9 @@ All Dependencies & Plugin downloaded from maven central and other repositories a
 
 .m2 contains all dependencies, plugins downloaded from repositories
 
-The plugins stored in `~/.m2/repository/org/apache/maven/plugins`
+The built-in plugins stored in `~/.m2/repository/org/apache/maven/plugins`
+
+**Other plugins stored based on the groupId**.
 
 The dependencies are stored based on the group as the groupId will be converted to tree of directory structure.
 
