@@ -1,0 +1,112 @@
+- Dependency Management
+
+- all maven built-in plugins mut start with maven-name-plugin such as maven-compiler-plugin.
+- all non maven plugins should start with name-maven-plugin such as exec-maven-plugin.
+
+- each phase in maven associated with goal(s).
+- goals are the actual task, that could run, not the phase itself.
+- phases are ordered, so when we run phase, it will run all the preceding phases first.
+- dependencies and plugins are stored in the .m2 directory, plugin is just a jar file.
+
+*************************************
+
+- transitive dependencies a project dependency, in turn, being dependent on other dependencies.
+
+- There are six different dependency scopes available:
+    - compile: This dependency is required for compilation. This automatically means it is
+      required for testing as well as runtime (when the project is run).
+
+    - test: This dependency is only required for tests. This means the dependency
+      is typically in the test code. As the test code is not used to run the project, these
+      dependencies are not required for runtime.
+
+    - runtime: These dependencies are not required during compilation, but only required
+      to run the project. One example would be the logback dependency if you are using
+      Simple Logging Facade for Java (slf4j) to log and want to use logback binding.
+      This scope indicates that the dependency is not required for normal use of the application,
+      and is only available for the test compilation and execution phases(mean that runtime available in compiling tests).
+
+    - provided: This tells Maven that dependency is required for compilation and runtime,
+      but this dependency need not be packaged with the package for distribution.
+      The dependency will be provided by the user. An example of this dependency is
+      servlet-api. Typically, application servers have these libraries.
+
+    - system: This is similar to the provided scope. Here, we need to explicitly provide the
+      location of the JAR file. It is not looked up from the repository. This may be useful to
+      specify a dependency that is not present in the repository.
+
+      <dependency>
+          <groupId>com.myorg</groupId>
+          <artifactId>some-jar</artifactId>
+          <version>2.0</version>
+          <scope>system</scope>
+          <systemPath>${basedir}/lib/some.jar</systemPath>
+      </dependency>
+
+    - import: This is only used on a dependency of the pom type in the
+      dependencyManagement section. It indicates that the specified pom should be
+      replaced with the dependencies in that pom's dependencyManagement section.
+      This is intended to centralize dependencies of large multi-module projects.
+
+
+*** Getting into dependency and avoiding dependency hell.
+
+- mvn dependency:list command is run, Maven runs the list goal and nothing els to show all dependencies.
+- This analyzes the pom file and generates a list of dependencies for
+  the project.
+- mvn dependency:tree this is a better representation of the transitivity of the dependencies
+
+- mvn dependency:tree -Dverbose  -> Maven will make the mediation and choose one dependency if 2 version used and will display it as omitted.
+
+- Maven resolves this by supporting the nearest definition.
+
+- Maven provides another way to handle the preceding scenario, namely, by using the
+  dependencyManagement element.
+
+- mvn dependency:copy-dependencies to download all dependencies into target/dependency
+- mvn dependency:copy-dependencies -Dmdep.copyPom=true Dmdep.useRepositoryLayout=true
+- this will be the same as repo structure and .m2 structure org/apache/commons/file.jar and so on
+
+
+*** Understanding SNAPSHOT dependencies
+- In Maven, a SNAPSHOT version is a version of the project/dependency that has not been released.
+- The SNAPSHOT version indicates software under development.
+
+- Maven treats SNAPSHOT versions differently from release versions.
+  For a release version, Maven checks if the artifact is available in the local repository that is
+  already downloaded. If so, it does not attempt to fetch the same from the remote repositories.
+  For SNAPSHOT versions, even if the artifact is available locally, it checks the SNAPSHOT
+  version for updates in the remote repository based on the update policy that can be
+  configured.
+  By default, the update interval is once a day.
+
+
+*** Handling dependency download errors
+- Maven first downloads the pom file of the dependency. It analyzes the pom file and recursively
+  downloads the transitive dependencies specified there. It then downloads the actual
+  dependency file, typically, a JAR file.
+
+- When Maven fails to download an artifact, it creates a file with the same name as the artifact
+  it failed to download, but suffixed with .lastUpdated.
+- The deletion of this file will ensure maven reattempts to download the
+  dependency when asked.
+
+
+*** Detecting unused/undeclared dependencies
+ - mvn dependency:analyze to know used dependencies and non used dependencies.
+
+ - we could use the deploy goal of the Maven deploy plugin to install the
+   artifact to the remote repository(mirrors repository manager).
+- Some remote repositories have access control. Maven allows access details to be specified in
+  the server element. It is best to specify this in settings.xml as this file is specific to
+  each user.
+
+
+**** Code Quality Plugins
+- Using Jacoco Plugin -> JaCoCo is a free Java code coverage tool.
+
+- Analyzing code with the Maven Checkstyle plugin
+- Analyzing code with the Maven SonarQube plugin
+- SonarQube is a platform to manage code quality, It is a web-based application.
+- We should start sonarQube Server first, then mvn sonar:sonar
+-

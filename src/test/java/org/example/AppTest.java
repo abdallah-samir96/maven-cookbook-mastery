@@ -25,6 +25,7 @@ public class AppTest
      */
     public static Test suite()
     {
+        assertEquals(1000, 1000);
         return new TestSuite( AppTest.class );
     }
 
@@ -33,6 +34,7 @@ public class AppTest
      */
     public void testApp()
     {
+        assertFalse(false);
         assertTrue( true );
     }
 }
