@@ -1,0 +1,8 @@
+Welcome to Project with Documentation.
+This is a maven project
+created as part of apache maven cookbook by Abdallah Publishing.
+What is Project with Documentation?
+This maven project contains examples of how to use the site
+feature of maven.
+
+Hello Maven

@@ -35,6 +35,31 @@
     </dependency>
 
   </dependencies>
+  <reporting>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.10.1</version>
+<!--          here we choose only the documentation for the java code not for the test-->
+          <reportSets>
+            <reportSet>
+              <reports>
+                <report>javadoc</report>
+              </reports>
+            </reportSet>
+          </reportSets>
+        </plugin>
+        <plugin>
+<!--          This is used to generate the source code beside the javadocs -->
+<!--          jxr plugin in reporting section is used to generate source code to the site-->
+<!--          same as javadoc plugin we can generate the source code for the java only, not for the test-->
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jxr-plugin</artifactId>
+          <version>2.5</version>
+        </plugin>
+      </plugins>
+  </reporting>
   <build>
     <plugins>
 
@@ -93,10 +118,11 @@
          </execution>
        </executions>
 <!--        here it will delete the directory abdallah under the basedir-->
+<!--       we can determine list of file to be deleted when running clean goal -->
        <configuration>
          <filesets>
            <fileset>
-             <directory>${basedir}/abdallah</directory>
+             <directory>${project.basedir}/abdallah</directory>
            </fileset>
          </filesets>
        </configuration>

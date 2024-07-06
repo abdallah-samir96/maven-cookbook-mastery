@@ -42,7 +42,7 @@ Maven Lifecycle
     </profiles>
     - mvn help:active-profiles to check the active profile
     - to activate the profile set <activeByDefault>true</activeByDefault>
-    - mvn –P dev package to invoke the dev profile.
+    - mvn –P dev package -> to invoke the dev profile.
     - mvn  -P dev clean compile exec:java to run using specific profile
     - we can active profile by OS or missing files or active by default, environment variables so on.
 
@@ -127,4 +127,3 @@ Maven Lifecycle
 - While unit tests are run during the test phase of the build lifecycle, integration tests
   are run during the verify phase.
 - The Maven Failsafe plugin is used to run integration tests.
--
