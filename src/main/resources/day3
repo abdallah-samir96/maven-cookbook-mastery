@@ -109,4 +109,5 @@
 - Analyzing code with the Maven SonarQube plugin
 - SonarQube is a platform to manage code quality, It is a web-based application.
 - We should start sonarQube Server first, then mvn sonar:sonar
--
+- We can use Sonatype Nexus OSS (free, not open source).
+- open source should be free, but free may be not open source.
