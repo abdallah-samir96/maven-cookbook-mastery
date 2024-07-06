@@ -63,6 +63,9 @@
       </plugins>
   </reporting>
   <build>
+
+<!--    This is the final name of jar file-->
+    <finalName>abdallah</finalName>
 <!--    this will be instead of target, will be created, mvn clean will clean it-->
     <outputDirectory>ahmed</outputDirectory>
     <plugins>
