@@ -32,3 +32,10 @@
         <version>2.18</version>
     </plugin>
 - mvn site -> here will generate site with the unit tests.
+
+
+
+- dependencyManagement is just a declaration, and it does not really add a dependency.
+- it is used mostly in multi-module projects to define the versions used by the childes.
+- Here all dependencies declared in the <dependencyManagement> tag is not in the class path.
+- it used to declare version, scope, so on that are used by the childes or by dependencies itself.
