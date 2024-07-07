@@ -41,4 +41,5 @@
 - it used to declare version, scope, so on that are used by the childes or by dependencies itself.
 
 
-- Used the shade plugin to create fat jar -> a jar includes all depends jar files.
+- Used the shade plugin to create fat jar -> a jar includes all dependencies jar files.
+- The thin Jar is jar that only contains the compiled classes only.

@@ -13,13 +13,10 @@
     <url>http://www.anything.com</url>
   </organization>
 
-
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <developer.email>abdallahsameer22@gmail.com</developer.email>
   </properties>
-
 
   <dependencies>
     <dependency>
