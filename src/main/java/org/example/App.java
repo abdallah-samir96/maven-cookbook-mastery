@@ -9,7 +9,8 @@ public class App
     public static void main( String[] args )
     {
 
-
+        showProperties();
+        System.out.println("********");
         System.out.println( "Hello Apache Maven!" );
         var name = "Abdallah";
         System.out.println("Hello, " + name);
@@ -34,6 +35,13 @@ public class App
         }
 
         System.out.println("Hello");
+
+    }
+    private static void showProperties() {
+
+        System.getProperties().forEach((k,v)->{
+            System.out.println(k + " = " + v);
+        });
 
     }
 }

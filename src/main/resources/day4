@@ -43,3 +43,6 @@
 
 - Used the shade plugin to create fat jar -> a jar includes all dependencies jar files.
 - The thin Jar is jar that only contains the compiled classes only.
+
+- mvn dependency:analyze            to show all used and non used dependencies.
+- mvn dependency:tree               to show the whole tree of the dependencies.
