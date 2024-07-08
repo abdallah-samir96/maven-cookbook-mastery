@@ -72,4 +72,21 @@ public class App
         }
         return true;
     }
+    boolean areAnagramsAnotherSolution(String A, String B) {
+        if(A.length() != B.length()) {
+            return false;
+        }
+        int []hashA = new int[26];
+        int []hashB = new int[26];
+        for(int i = 0; i < A.length(); i++) {
+            hashA[A.charAt(i) - 'a']++;
+            hashB[B.charAt(i) - 'a']++;
+        }
+        for(int i = 0; i < 26; i++) {
+            if(hashA[i] != hashB[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
