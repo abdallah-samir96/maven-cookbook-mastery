@@ -55,4 +55,21 @@ public class App
         }
         return arr.length - count;
     }
+    boolean areAnagrams(String first, String second) {
+        int [] positions = new int[26];
+        if(first.length() != second.length()) {
+            return false;
+        }
+        for(int j = 0; j < first.length(); ++j) {
+            positions[first.charAt(j) % 26]++;
+            positions[second.charAt(j) % 26]--;
+
+        }
+        for(int i: positions) {
+            if(i != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
