@@ -83,3 +83,9 @@ There are three types of Maven repositories :
             - The output .jar file: The generated project artifact is also present in this folder.
             - Two other folders—maven-archiver and maven-status—hold information used by Maven during the build.
 
+
+
+- When using jar:jar plugin, the source code should be compiled first, but when using mvn package it will call the compile phase.
+
+
+

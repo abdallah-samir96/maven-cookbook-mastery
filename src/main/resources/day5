@@ -1,0 +1,156 @@
+- Handling Typical Build Requirements
+- software configuration management (SCM) (Source Code Management such Git)
+- we might generate sources dynamically from tools such as wsdl2java.
+- Maven provides different levels of logging.
+    - -q parameter tells Maven to be quiet and not display anything other than ERROR level
+    - -X parameter tells Maven to display all messages at the DEBUG
+    - mvn –l simple-project-log.txt clean package add the logging into text file.
+    - Another Format mvn clean package > simple-project-log.txt
+
+****** Using the Maven Help plugin
+- mvn help:effective-pom
+- mvn help:all-profiles
+- mvn help:active-profiles
+- mvn –P dev help:active-profiles
+
+
+- effective-pom: This displays the pom file that will be used by Maven after applying
+  inheritance, interpolation, and profiles. This is useful to know the final pom file when
+  it is needed for troubleshooting.
+- all-profiles: This goal displays all the profiles that are available for the project. It
+  indicates whether the profiles are active or not.
+- active-profiles: This goal displays the list of active profiles. We explicitly
+  enabled the dev profile (which was not active by default), so it showed up in the list
+  of active profiles.
+
+- To get info about specific plugin
+- mvn
+  help:describe
+  -DgroupId=org.jacoco
+  -DartifactId=jacoco-maven-plugin
+  -Ddetail=true
+
+- The describe goal does not need you to have a Maven project.
+  You are just getting some help information for a particular plugin!
+
+**** Multi-module Projects ****
+- project inheritance for this. Maven allows a number of
+  elements specified in the parent pom file to be merged to the inheriting project
+
+1- creates parent app with pom.xml
+2- create child app on the same herarchy of pox.xml of parent, specified a parent element in the pom file of child.
+
+my-project
+├── pom.xml
+├── module1
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   └── java
+│       └── test
+│           └── java
+├── module2
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   └── java
+│       └── test
+│           └── java
+
+- The parent pom.xml file defines the modules within the <modules> section.
+
+        <!-- Parent project configuration -->
+        <project>
+              <groupId>com.example</groupId>
+              <artifactId>my-project</artifactId>
+              <version>1.0.0</version>
+              <packaging>pom</packaging>
+
+              <modules>
+                <module>module1</module>
+                <module>module2</module>
+                <module>module3</module>
+              </modules>
+
+          <!-- Parent project configuration -->
+          ...
+        </project>
+
+
+- Due to the relationship defined, when Maven runs on the child project, it inherits groupId,
+  version, properties, and dependencies defined in the parent.
+
+- We did not specify the groupId and version coordinates of the child project  it inherits them from parent.
+- The multi-module project is called Aggregation project.
+
+- When we build the parent project, it automatically builds the child by virtue of the modules
+  element. At the same time, the child project can be built independently as well.
+
+
+
+- The child project need not necessarily be a subfolder of the parent project.
+  If it is elsewhere, as we have seen in the earlier recipes, it can be one of the following:
+  1- relativePath: relativePath of the parent element should point to the appropriate location of the parent
+  2- module: The module element should contain the appropriate path to the child project
+- Here we could make multi module project but refer to them from child and parent to know each other.
+
+
+- Dependency management is a mechanism to centralize dependency information
+- When there are a set of projects (or modules) that inherit a common parent, all information about the
+  dependency can be put in the parent pom and the projects can have simpler references to them,
+  This makes it easy to maintain the dependencies across multiple projects and reduces
+  the issues that typically arise due to multiple versions of the same dependencies.
+
+- Dependency mediation is what determines what version
+  of dependency will be used when multiple versions of an artifact are encountered.
+
+- Let us see how we can selectively build modules by using the profile feature of Maven.
+
+
+ - In Parent we included only (common-one) in modules and (common-one, dev-two) in the profiles section
+ - when we compile and run without profiles will compile (common-one), when using -P dev will takes (common-one, dev-two)
+ <modules>
+    <module>common-one</module>
+ </modules>
+ <profiles>
+     <profile>
+         <id>dev</id>
+         <modules>
+            <module>common-one</module>
+            <module>dev-two</module>
+         </modules>
+     </profile>
+ </profiles>
+
+
+- we define dependency management to centralize the the dependencies and choose specific versions for all childes.
+- dependency management not includes the dependency in the class path, it is just for organizing versions.
+
+- pluginsManagement is the same, but it will be included in the default lifecycle.
+- here if we used pluginsManagement related to default lifecycle and not relate it to the child, it will be included as its from build(default) lifecycle.
+
+- here when we need to use module in another module, we just add it's info in dependencies element.
+- we could not make cyclic dependencies in multi module project.
+- we could add the parent and childes in any location, but we must refer to them using relativePath, modules in parent should refer to childes
+
+in child should be this form
+      <parent>
+            <groupId>com.example</groupId>
+            <artifactId>abc</artifactId>
+            <version>1.0.0</version>
+            <relativePath>../../abc</relativePath> determine the location of parent
+        </parent>
+
+in parent
+    <modules>
+        <module>conf</module>
+        <module>service</module> the location of the child
+
+    </modules>
+
+
+- packaging pom in parent
+    - pom is basically a container of submodules,
+      each submodule is represented by a subdirectory in the same directory as pom.xml with pom packaging.
+    - if we make it as jar will produce an error
+        - Invalid packaging for parent POM com.example:abc:1.0.0 (D:\maven\abc\pom.xml), must be "pom" but is "jar"
