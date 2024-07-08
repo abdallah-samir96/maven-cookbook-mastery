@@ -40,6 +40,8 @@
 1- creates parent app with pom.xml
 2- create child app on the same herarchy of pox.xml of parent, specified a parent element in the pom file of child.
 
+
+-- This is the best practices, but we can includes all folders from any locations but should refer to them.
 my-project
 ├── pom.xml
 ├── module1
@@ -121,6 +123,9 @@ my-project
          </modules>
      </profile>
  </profiles>
+
+ - mvn -P dev clean compile package -> here will package all modules as we use profiles.
+ - mvn clean compile package        -> will include only the common-one module as this is the default.
 
 
 - we define dependency management to centralize the the dependencies and choose specific versions for all childes.
