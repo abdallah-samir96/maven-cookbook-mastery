@@ -4,7 +4,7 @@
   <groupId>org.example</groupId>
   <artifactId>maven-cookbook-mastery</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>maven-cookbook-mastery</name>
   <url>http://maven.apache.org</url>
   <description>This description is written by abdallah samir ${developer.email}</description>
@@ -69,6 +69,27 @@
     <outputDirectory>ahmed</outputDirectory>
     <plugins>
 <!--      Used to generate unique builds-->
+<!--      <plugin>-->
+<!--        <groupId>org.codehaus.mojo</groupId>-->
+<!--        <artifactId>buildnumber-maven-plugin</artifactId>-->
+<!--        <version>3.1.0</version>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <phase>package</phase>-->
+<!--            <goals>-->
+<!--              <goal>create</goal>-->
+<!--            </goals>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--        <configuration>-->
+<!--            <format>{0}</format>-->
+<!--            <items>-->
+<!--              <item>timestamp</item>-->
+<!--            </items>-->
+<!--            <doCheck>true</doCheck>-->
+<!--            <doUpdate>true</doUpdate>-->
+<!--        </configuration>-->
+<!--      </plugin>-->
 
 
 <!--      using the shade plugin-->
