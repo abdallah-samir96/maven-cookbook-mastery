@@ -2,7 +2,8 @@ package org.example;
 
 import org.apache.commons.text.WordUtils;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class App
 {
@@ -88,5 +89,20 @@ public class App
             }
         }
         return true;
+    }
+
+    int getIdenticalTwinsCount (int[] arr) {
+        List<Integer> visited = new ArrayList<>();
+        int twinsCount = 0;
+        for(int j = 0; j < arr.length -1; ++j) {
+            for(int i = j + 1; i < arr.length; ++i) {
+                if(arr[j] == arr[i] && !visited.contains(arr[j])) {
+                    twinsCount ++;
+                    visited.add(arr[j]);
+                }
+            }
+        }
+
+        return twinsCount;
     }
 }
