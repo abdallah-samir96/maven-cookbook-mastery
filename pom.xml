@@ -62,10 +62,13 @@
   <build>
 
 <!--    This is the final name of jar file-->
-    <finalName>abdallah</finalName>
+<!--    <finalName>abdallah</finalName>-->
+<!--    <finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>-->
+
 <!--    this will be instead of target, will be created, mvn clean will clean it-->
     <outputDirectory>ahmed</outputDirectory>
     <plugins>
+<!--      Used to generate unique builds-->
 
 
 <!--      using the shade plugin-->
@@ -136,6 +139,9 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.0.0</version>
         <configuration>
+<!--          here the exec:exec goal will deal with external binaries such as system and so on-->
+<!--          we can run java itself from this exec:exec and pass the arguments-->
+          <executable>calc</executable>
           <mainClass>org.example.App</mainClass>
         </configuration>
       </plugin>

@@ -109,10 +109,25 @@ mvn archetype:generate –DinteractiveMode=false
 - mvn compiler:compile: This compiles the source files
 - mvn compiler:testCompile: This compiles test files
 - mvn  surefire:test: This runs tests
-- mvn  jar:jar: This creates a JAR artifact
+- mvn  jar:jar: -> This creates a JAR artifact
 
 ***
 - The Maven Tomcat plugin supports the
   ability to build and deploy Maven projects in Tomcat.
 - mvn org.apache.tomcat.maven:tomcat7-maven-plugin:run to run web app into tomcat
 
+********************
+-- Running an ANT task
+- ANT is a popular build automation tool that provides a great degree of flexibility.
+- It also provides tasks, such as echo and touch, that are not available in Maven.
+- Maven provides a mechanism to run arbitrary ANT tasks by way of the Maven AntRun plugin.
+
+- mvn versions:display-dependency-updates -> to check the dependencies updates.
+
+
+
+** Generating unique builds
+
+- Plugin is buildnumber-maven-plugin
+- This plugin works in one of 3 ways: with an SCM, with a sequential build number, or with a timestamp.
+- We need to search about, how to build unique jars.
