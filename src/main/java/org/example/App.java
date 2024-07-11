@@ -2,14 +2,18 @@ package org.example;
 
 import org.apache.commons.text.WordUtils;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 public class App
 {
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) throws URISyntaxException, IOException {
 
         showProperties();
         System.out.println("********");
@@ -18,7 +22,20 @@ public class App
         System.out.println("Hello, " + name);
         System.out.println(WordUtils.uncapitalize("Hello Word!!"));
         checkJavaConcepts();
+        dealingWithFiles();
     }
+
+    private static void dealingWithFiles() throws URISyntaxException, IOException {
+        var fileURL = App.class.getClassLoader().getResource("day1");
+        if(fileURL != null) {
+            var fs = new FileInputStream(Path.of(fileURL.toURI()).toFile());
+            System.out.println("Hello From InputStream");
+            System.out.println(new String(fs.readAllBytes()));
+            fs.close();
+        }
+    }
+
+
     private static void checkJavaConcepts()  {
         // Java pass the reference of object itself by Value, any changes of object state, not change the object itself.
 
