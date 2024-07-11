@@ -2,6 +2,7 @@ package org.example;
 
 import org.apache.commons.text.WordUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,16 @@ public class App
         var name = "Abdallah";
         System.out.println("Hello, " + name);
         System.out.println(WordUtils.uncapitalize("Hello Word!!"));
+        checkJavaConcepts();
+    }
+    private static void checkJavaConcepts()  {
+        // Java pass the reference of object itself by Value, any changes of object state, not change the object itself.
+
+        System.gc();
+        // Runtime has private constructor
+        Runtime.getRuntime().gc();
+
+
     }
 
 
